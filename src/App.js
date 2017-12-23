@@ -111,7 +111,7 @@ class App extends Component {
             <Content className='content'>
               <Switch>
                 <Route exact path='/' component={() => <Home selectedKey={selectedKey} books={books} getBooks={this.getBooks} updateBook={this.updateBook} changeKeys={this.changeKeys}/>}/>
-                <Route exact path='/search' component={() => <Search selectedKey={selectedKey} updateBook={this.updateBook} changeKeys={this.changeKeys}/>}/>
+                <Route exact path='/search' component={() => <Search selectedKey={selectedKey} myBooks={books} updateBook={this.updateBook} changeKeys={this.changeKeys}/>}/>
                 <Route component={NotFound}/>
               </Switch>
             </Content>

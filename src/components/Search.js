@@ -23,8 +23,12 @@ export default class Search extends Component {
   onSearch = query => {
     this.setState({ query, error: '' }, async () => {
       try {
-        const books = await search(query)
-        if (books.error) throw books.error
+        const searchBooks = await search(query)
+        if (searchBooks.error) throw searchBooks.error
+        const books = searchBooks.map(book => {
+          const myBook = this.props.myBooks.find(({ id }) => book.id === id)
+          return myBook || { ...book, shelf: '' }
+        })
         this.setState({ books })
       } catch (error) {
         this.setState({ books: [], error })
@@ -57,7 +61,7 @@ export default class Search extends Component {
           <span className='search-error'>
             {this.renderError()}
           </span>
-          {books.map(book => <BookItem updateBook={updateBook} key={book.id} book={{ ...book, shelf: '' }}/>)}
+          {books.map(book => <BookItem updateBook={updateBook} key={book.id} book={book}/>)}
         </div>
       </div>
     )
@@ -66,6 +70,7 @@ export default class Search extends Component {
 
 Search.propTypes = {
   selectedKey: PropTypes.oneOf(['1', '2']).isRequired,
+  myBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
   updateBook: PropTypes.func.isRequired,
   changeKeys: PropTypes.func.isRequired
 }
