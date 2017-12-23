@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-  BrowserRouter as Router, Route, Link, Switch
+  HashRouter as Router, Route, Link, Switch
 } from 'react-router-dom'
 import {
   Layout, Menu, Icon, Dropdown, Spin, message

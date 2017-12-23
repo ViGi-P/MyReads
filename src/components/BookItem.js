@@ -13,10 +13,15 @@ const renderField = (book, field) => {
   return []
 }
 
+const renderImageLink = book => {
+  if (book.imageLinks && book.imageLinks.thumbnail) return book.imageLinks.thumbnail
+  return 'https://i5.walmartimages.com/asr/f752abb3-1b49-4f99-b68a-7c4d77b45b40_1.39d6c524f6033c7c58bd073db1b99786.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF'
+}
+
 const BookItem = ({ book, updateBook }) => (
   <Card
     className='book-item'
-    cover={<img className='book-item-cover' src={book.imageLinks.thumbnail || ''} alt={book.title}/>}
+    cover={<img className='book-item-cover' src={renderImageLink(book)} alt={book.title}/>}
     actions = {[
       <Button
         onClick={() => {
@@ -45,7 +50,7 @@ const BookItem = ({ book, updateBook }) => (
     ]}
   >
     <Meta
-      avatar={<img className='book-item-img' src={book.imageLinks.thumbnail || ''} alt={book.title}/>}
+      avatar={<img className='book-item-img' src={renderImageLink(book)} alt={book.title}/>}
       description={<div className='book-description'>
         <h3>{renderField(book, 'title')}</h3>
         <p>{renderField(book, 'authors').join(', ')}</p>
