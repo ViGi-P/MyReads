@@ -122,3 +122,8 @@
     text-align: left;
   }
 }
+
+.ant-card-actions li:first-child {
+  width: 38% !important;
+  border-right-width: 0 !important;
+}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   Input
 } from 'antd'
@@ -61,4 +62,10 @@ export default class Search extends Component {
       </div>
     )
   }
+}
+
+Search.propTypes = {
+  selectedKey: PropTypes.oneOf(['1', '2']).isRequired,
+  updateBook: PropTypes.func.isRequired,
+  changeKeys: PropTypes.func.isRequired
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {
   Select, Card, Modal, Button
 } from 'antd'
@@ -12,11 +13,21 @@ const renderField = (book, field) => {
   return []
 }
 
-export default ({ book, updateBook }) => (
+const BookItem = ({ book, updateBook }) => (
   <Card
     className='book-item'
     cover={<img className='book-item-cover' src={book.imageLinks.thumbnail || ''} alt={book.title}/>}
     actions = {[
+      <Button
+        onClick={() => {
+          Modal.info({
+            content: <BookModal renderField={renderField} book={book}/>,
+            okText: 'Close'
+          })
+        }}
+      >
+        More Info
+      </Button>,
       <Select
         placeholder='Add to list'
         value={book.shelf}
@@ -30,17 +41,7 @@ export default ({ book, updateBook }) => (
         <Option value='read'>Read</Option>
         <Option style={{ display: book.shelf === '' ? 'none' : 'block' }} value='none'>Remove</Option>
         <Option style={{ display: 'none' }} value=''>Add to list</Option>
-      </Select>,
-      <Button
-        onClick={() => {
-          Modal.info({
-            content: <BookModal renderField={renderField} book={book}/>,
-            okText: 'Close'
-          })
-        }}
-      >
-        More Info
-      </Button>
+      </Select>
     ]}
   >
     <Meta
@@ -53,3 +54,10 @@ export default ({ book, updateBook }) => (
     />
   </Card>
 )
+
+BookItem.propTypes = {
+  book: PropTypes.object.isRequired,
+  updateBook: PropTypes.func.isRequired,
+}
+
+export default BookItem

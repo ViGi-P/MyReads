@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import BookItem from './BookItem'
 
-export default class Search extends Component {
+export default class Home extends Component {
   componentWillMount() {
     const { selectedKey, changeKeys } = this.props
     if (selectedKey !== '1') changeKeys('1')
@@ -27,4 +28,12 @@ export default class Search extends Component {
       </div>
     )
   }
+}
+
+Home.propTypes = {
+  selectedKey: PropTypes.oneOf(['1', '2']).isRequired,
+  books: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getBooks: PropTypes.func.isRequired,
+  updateBook: PropTypes.func.isRequired,
+  changeKeys: PropTypes.func.isRequired
 }
