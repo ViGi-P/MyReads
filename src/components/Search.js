@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Input
+  Debounce
+} from 'react-throttle'
+import {
+  Input, Icon
 } from 'antd'
 import {
   search
@@ -21,7 +24,7 @@ export default class Search extends Component {
   }
 
   onSearch = query => {
-    this.setState({ query, error: '' }, async () => {
+    this.setState({ query, error: <span><Icon type='loading'/> Loading...</span> }, async () => {
       try {
         const searchBooks = await search(query)
         if (searchBooks.error) throw searchBooks.error
@@ -29,7 +32,7 @@ export default class Search extends Component {
           const myBook = this.props.myBooks.find(({ id }) => book.id === id)
           return myBook || { ...book, shelf: '' }
         })
-        this.setState({ books })
+        this.setState({ books, error: '' })
       } catch (error) {
         this.setState({ books: [], error })
         console.log('queryChange error', error)
@@ -42,7 +45,7 @@ export default class Search extends Component {
 
     switch (error) {
       case 'empty query': return `No results found for "${query}"`
-      case 'Please provide a query in the request body': return 'Enter a word in the input above'
+      case 'Please provide a query in the request body': return 'Type something in the input above'
       default: return error
     }
   }
@@ -53,10 +56,12 @@ export default class Search extends Component {
 
     return (
       <div>
-        <Input.Search
-          placeholder='Search by title or author'
-          onSearch={this.onSearch}
-        />
+        <Debounce time='450' handler='onChange'>
+          <Input.Search
+            placeholder='Search by title or author'
+            onChange={e => this.onSearch(e.target.value)}
+          />
+        </Debounce>
         <div className='search-results'>
           <span className='search-error'>
             {this.renderError()}
