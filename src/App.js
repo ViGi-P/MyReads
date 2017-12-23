@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {
-  HashRouter as Router, Route, Link, Switch
+  HashRouter as Router, // BrowserRouter causing bugs on deploying to gh-pages
+  Route, Link, Switch
 } from 'react-router-dom'
 import {
   Layout, Menu, Icon, Dropdown, Spin, message
