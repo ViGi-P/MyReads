@@ -6,7 +6,7 @@
     "antd": "3.12.4",
     "react": "16.7.0",
     "react-dom": "16.7.0",
-    "react-router-dom": "4.3.1",
+    "react-router-dom": "5.1.2",
     "react-scripts": "1.1.5",
     "react-throttle": "0.3.0"
   },
